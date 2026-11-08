@@ -1,0 +1,15 @@
+/* Quick Switcher: reuses popup.css (colours, .item, .fav, .badge, #q, #results) and only changes the page frame. */
+body.quick { width: auto; height: 100vh; min-width: 360px; grid-template-rows: auto auto minmax(0, 1fr) auto; }
+.quick .top { padding-bottom: 8px; }
+.quick .controls { border-bottom: 1px solid var(--line); }
+.quick main { display: flex; flex-direction: column; min-height: 0; }
+.crumb { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+.item.group { grid-template-columns: 24px minmax(0, 1fr) auto; }
+.item.group .fav { background: transparent; }
+.item.group .fav .dot { width: 10px; height: 10px; }
+.count-pill { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.item .sub .gname { color: var(--text); opacity: .75; flex: none; }
+.item .sub .sep { opacity: .5; flex: none; }
+.badges { display: flex; gap: 4px; align-items: center; }
+.more { color: var(--muted); text-align: center; padding: 8px; font-size: 12px; list-style: none; }

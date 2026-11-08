@@ -34,6 +34,12 @@
       },
       "description": "Open the Tabfold tab switcher (search is focused)"
     },
+    "quick-switcher": {
+      "suggested_key": {
+        "default": "Alt+Q"
+      },
+      "description": "Open the Tabfold Quick Switcher (groups, then tabs)"
+    },
     "launch-01": {
       "description": "Tabfold launcher 01",
       "suggested_key": {

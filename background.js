@@ -58,7 +58,38 @@ export async function receiveCommand(command, tab, now = Date.now()) {
   return handleCommand(command, tab);
 }
 
-chrome.commands.onCommand.addListener((command, tab) => { receiveCommand(command, tab).catch((err) => console.warn('Tabfold launcher failed:', err)); });
+// ---- Quick Switcher (Alt+Q): a small popup window, because an extension popup can only ever show popup.html
+export const QUICK_COMMAND = 'quick-switcher';
+const QUICK_SIZE = { width: 480, height: 520 };
+
+/** Opens the switcher centred over the current window; if it is already open, brings it forward, or closes it when it already has focus. */
+export async function openQuickSwitcher() {
+  const { quickWindowId } = await chrome.storage.session.get('quickWindowId');
+  if (typeof quickWindowId === 'number') {
+    try {
+      const existing = await chrome.windows.get(quickWindowId);
+      if (existing.focused) await chrome.windows.remove(quickWindowId);
+      else await chrome.windows.update(quickWindowId, { focused: true });
+      return existing.focused ? 'closed' : 'focused';
+    } catch { /* it was closed: open a new one */ }
+  }
+  const position = {};
+  try {
+    const base = await chrome.windows.getLastFocused({ windowTypes: ['normal'] });
+    if (base.state !== 'minimized' && [base.left, base.top, base.width].every(Number.isFinite)) {
+      position.left = Math.max(0, base.left + Math.round((base.width - QUICK_SIZE.width) / 2));
+      position.top = Math.max(0, base.top + 60);
+    }
+  } catch { /* no normal window: let Chrome place it */ }
+  const win = await chrome.windows.create({ url: chrome.runtime.getURL('quick.html'), type: 'popup', focused: true, ...QUICK_SIZE, ...position });
+  await chrome.storage.session.set({ quickWindowId: win.id });
+  return 'opened';
+}
+
+chrome.commands.onCommand.addListener((command, tab) => {
+  if (command === QUICK_COMMAND) { openQuickSwitcher().catch((err) => console.warn('Tabfold Quick Switcher failed:', err)); return; }
+  receiveCommand(command, tab).catch((err) => console.warn('Tabfold launcher failed:', err));
+});
 
 // ---- grouping: new tabs, navigation, tabs moved between windows
 chrome.tabs.onCreated.addListener((tab) => { if (tab.pendingUrl || tab.url) organizeAndCollapse(tab.id, {}); });
@@ -91,4 +122,4 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 seedDefaults().catch((err) => console.warn('Tabfold could not save its defaults:', err));
 
 // Handy for diagnostics from the service worker's DevTools console.
-globalThis.__tabfold = { handleCommand, receiveCommand, organizeAll, organizeTab, scheduleCollapse };
+globalThis.__tabfold = { handleCommand, receiveCommand, openQuickSwitcher, organizeAll, organizeTab, scheduleCollapse };

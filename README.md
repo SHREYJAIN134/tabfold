@@ -35,6 +35,8 @@ Chrome does not let an extension choose its own keys, so step 3 is always done i
 
 **Tab groups.** Auto-group (toggle at the top of the popup) puts tabs in colour-coded groups per window: **YouTube** (red), **Technical** (blue: GitHub, GitLab, Stack Overflow, MDN, npm, localhost, developer docs), **Google** (yellow: Search, Gmail, Drive, Docs, Sheets, Calendar, Meet), **Others** (grey). Pinned tabs, blank tabs, Chrome pages and groups you made yourself are left alone. Tabs you drag out of a group stay out until they navigate to a different kind of site.
 
+**Quick Switcher.** `Alt+Q` opens a small keyboard-only window listing Tabfold's groups (YouTube, Technical, Google, Others) with tab counts. Type to filter groups and tabs together (fuzzy, case-insensitive, matches title and URL); `Enter` on a group lists its tabs, `Enter` on a tab jumps to it (any window, restored if minimised); `Backspace` on an empty field goes back to the groups; `Esc` closes. `YouTube / python` searches straight inside a group. Pressing `Alt+Q` again closes it. Change the key at chrome://extensions/shortcuts ("Open the Tabfold Quick Switcher"). Chrome's own `Ctrl+Tab`, `Ctrl+Shift+Tab` and `Ctrl+1–9` are untouched.
+
 ## Permissions
 
 | Permission | Why |
@@ -60,6 +62,7 @@ tests/            logic / background / collapse tests, e2e-chrome.mjs, e2e-fixes
 ```
 node tools/validate.mjs                       manifest, assets, imports, syntax (92 checks)
 node --test tests/logic.test.mjs tests/background.test.mjs tests/collapse.test.mjs     54 offline tests with a fake chrome
+node tests/e2e-quick.mjs                       Quick Switcher in a real headless Chrome (20 checks)
 node tests/e2e-chrome.mjs                     headless separate Chrome, temp profile: 71 behaviours (launching, grouping, switcher, shortcuts screen)
 node tests/e2e-fixes.mjs                      headful separate Chrome with REAL key presses: Ctrl+G / Alt+Shift+G and collapsing groups (44 checks)
 ```
