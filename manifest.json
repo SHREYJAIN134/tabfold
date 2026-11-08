@@ -1,5 +1,80 @@
 {
   "manifest_version": 3,
   "name": "Tabfold",
-  "version": "1.1.0"
+  "version": "1.1.0",
+  "description": "Open your websites with personal keyboard shortcuts, auto-group tabs into Chrome tab groups, and switch between tabs fast.",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "tabs",
+    "tabGroups",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Tabfold (Alt+K)",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+K"
+      },
+      "description": "Open the Tabfold tab switcher (search is focused)"
+    },
+    "launch-01": {
+      "description": "Tabfold launcher 01",
+      "suggested_key": {
+        "windows": "Ctrl+Y",
+        "linux": "Ctrl+Y",
+        "chromeos": "Ctrl+Y",
+        "mac": "MacCtrl+Y"
+      }
+    },
+    "launch-02": {
+      "description": "Tabfold launcher 02"
+    },
+    "launch-03": {
+      "description": "Tabfold launcher 03"
+    },
+    "launch-04": {
+      "description": "Tabfold launcher 04"
+    },
+    "launch-05": {
+      "description": "Tabfold launcher 05"
+    },
+    "launch-06": {
+      "description": "Tabfold launcher 06"
+    },
+    "launch-07": {
+      "description": "Tabfold launcher 07"
+    },
+    "launch-08": {
+      "description": "Tabfold launcher 08"
+    },
+    "launch-09": {
+      "description": "Tabfold launcher 09"
+    },
+    "launch-10": {
+      "description": "Tabfold launcher 10"
+    },
+    "launch-11": {
+      "description": "Tabfold launcher 11"
+    },
+    "launch-12": {
+      "description": "Tabfold launcher 12"
+    }
+  }
 }

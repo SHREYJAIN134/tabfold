@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabfold</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img src="icons/icon-32.png" alt="" width="22" height="22"><span>Tabfold</span></div>
+    <div class="toggles">
+      <label class="toggle" title="Group tabs into Chrome tab groups automatically">
+        <input type="checkbox" id="autoGroup">
+        <span class="track" aria-hidden="true"></span>
+        <span class="tlabel">Auto-group</span>
+      </label>
+      <label class="toggle" title="Keep only the group of the tab you are on expanded (per window)">
+        <input type="checkbox" id="collapseInactive">
+        <span class="track" aria-hidden="true"></span>
+        <span class="tlabel">Collapse inactive groups</span>
+      </label>
+    </div>
+  </header>
+
+  <nav class="views" aria-label="Tabfold">
+    <div class="viewtabs" role="tablist" aria-label="Views">
+      <button type="button" role="tab" id="tab-tabs" aria-controls="view-tabs" aria-selected="true">Tabs</button>
+      <button type="button" role="tab" id="tab-shortcuts" aria-controls="view-shortcuts" aria-selected="false" tabindex="-1">My shortcuts</button>
+    </div>
+    <button type="button" class="btn primary small" id="addTop">+ Add shortcut</button>
+  </nav>
+
+  <main>
+    <!-- ============================== Tabs ============================== -->
+    <section id="view-tabs" role="tabpanel" aria-labelledby="tab-tabs">
+      <div class="controls">
+        <input id="q" type="text" role="combobox" aria-expanded="true" aria-controls="results" aria-autocomplete="list"
+               aria-label="Search open tabs by title or domain" placeholder="Search tabs by title or domain" autocomplete="off" spellcheck="false" autofocus>
+        <div class="chips" role="group" aria-label="Filter by group">
+          <button type="button" class="chip" data-cat="all" aria-pressed="true">All</button>
+          <button type="button" class="chip" data-cat="youtube" aria-pressed="false"><i class="dot youtube"></i>YouTube</button>
+          <button type="button" class="chip" data-cat="technical" aria-pressed="false"><i class="dot technical"></i>Technical</button>
+          <button type="button" class="chip" data-cat="google" aria-pressed="false"><i class="dot google"></i>Google</button>
+          <button type="button" class="chip" data-cat="others" aria-pressed="false"><i class="dot others"></i>Others</button>
+        </div>
+        <div class="quick" role="group" aria-label="Open a website">
+          <span class="quicklabel">Open</span>
+          <button type="button" class="btn small" data-open="https://www.youtube.com/">YouTube</button>
+          <button type="button" class="btn small" data-open="https://github.com/">GitHub</button>
+          <button type="button" class="btn small" data-open="https://www.google.com/">Google</button>
+        </div>
+      </div>
+      <ul id="results" role="listbox" aria-label="Open tabs"></ul>
+      <p id="empty" class="empty" hidden></p>
+    </section>
+
+    <!-- ============================== My shortcuts ============================== -->
+    <section id="view-shortcuts" role="tabpanel" aria-labelledby="tab-shortcuts" hidden>
+      <div class="scroll">
+        <div class="section-head">
+          <h1>My shortcuts</h1>
+          <span class="count" id="slotsUsed"></span>
+        </div>
+
+        <div id="banner" class="banner" role="status" hidden>
+          <p id="bannerText"></p>
+          <div class="banner-actions">
+            <button type="button" class="btn primary small" id="bannerAssign">Assign key in Chrome</button>
+            <button type="button" class="btn small" id="bannerDismiss">Dismiss</button>
+          </div>
+        </div>
+
+        <form id="form" class="form" hidden novalidate>
+          <h2 id="formTitle">Add shortcut</h2>
+          <label>Website name<input id="fName" type="text" maxlength="60" placeholder="GitHub" autocomplete="off"></label>
+          <label>Website address<input id="fUrl" type="text" inputmode="url" placeholder="github.com" autocomplete="off" spellcheck="false"></label>
+          <label>Launcher slot<select id="fSlot"></select></label>
+          <p id="slotInfo" class="hint"></p>
+          <label>Key you plan to use (optional note)<input id="fKey" type="text" maxlength="40" placeholder="Ctrl+G" autocomplete="off" spellcheck="false"></label>
+          <p id="keyConflict" class="hint conflict" hidden></p>
+          <p class="hint">Chrome decides which keys are allowed. This is only a note: Tabfold shows a key as active only after Chrome reports it.</p>
+          <p id="formError" class="error" role="alert" hidden></p>
+          <div class="form-actions">
+            <button type="submit" class="btn primary" id="fSave">Save</button>
+            <button type="button" class="btn" id="fCancel">Cancel</button>
+          </div>
+        </form>
+
+        <ul id="launchers" class="launchers" aria-label="Your shortcuts"></ul>
+        <ul id="unused" class="unused" aria-label="Keys on empty slots" hidden></ul>
+        <p class="note">Chrome keeps keyboard shortcuts for extensions at <strong>chrome://extensions/shortcuts</strong>. Look for the <strong>Tabfold launcher</strong> names there. Tabfold has 12 slots, so you can have up to 12 website shortcuts.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="foot"><span id="hints"><kbd>↑</kbd><kbd>↓</kbd> select <kbd>Enter</kbd> open <kbd>Esc</kbd> close</span><span id="count"></span></footer>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
