@@ -1,15 +1,17 @@
-/* Quick Switcher: reuses popup.css (colours, .item, .fav, .badge, #q, #results) and only changes the page frame. */
-body.quick { width: auto; height: 100vh; min-width: 360px; grid-template-rows: auto auto minmax(0, 1fr) auto; }
-.quick .top { padding-bottom: 8px; }
-.quick .controls { border-bottom: 1px solid var(--line); }
+/* Quick Switcher: reuses popup.css (colours, .item, .fav, .badge, #results) and only changes the page frame. */
+body.quick { width: auto; height: 100vh; min-width: 360px; grid-template-rows: auto minmax(0, 1fr) auto; }
+.quick .top { padding-bottom: 8px; border-bottom: 1px solid var(--line); justify-content: flex-start; }
+.quick .top .brand { flex: 1 1 auto; min-width: 0; }
+.quick .top .brand span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .quick main { display: flex; flex-direction: column; min-height: 0; }
-.crumb { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.quick #results { outline: none; scroll-behavior: smooth; padding-top: 8px; }
+.back { border: 1px solid var(--line); background: var(--raised); border-radius: 7px; width: 28px; height: 26px; font-size: 15px; line-height: 1; }
+.back:hover { border-color: #3a413b; }
 
 .item.group { grid-template-columns: 24px minmax(0, 1fr) auto; }
 .item.group .fav { background: transparent; }
 .item.group .fav .dot { width: 10px; height: 10px; }
+.item.group.empty-group .title { color: var(--muted); }
 .count-pill { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.item .sub .gname { color: var(--text); opacity: .75; flex: none; }
-.item .sub .sep { opacity: .5; flex: none; }
+.item.current .title::before { content: "● "; color: var(--lime); }
 .badges { display: flex; gap: 4px; align-items: center; }
-.more { color: var(--muted); text-align: center; padding: 8px; font-size: 12px; list-style: none; }

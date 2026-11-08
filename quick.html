@@ -9,21 +9,17 @@
 </head>
 <body class="quick">
   <header class="top">
-    <div class="brand"><img src="icons/icon-32.png" alt="" width="22" height="22"><span>Tabfold — Quick Switcher</span></div>
-    <span id="crumb" class="crumb" hidden></span>
+    <button type="button" id="back" class="back" aria-label="Back to groups" title="Back to groups (←)" hidden>←</button>
+    <div class="brand"><img src="icons/icon-32.png" alt="" width="22" height="22"><span id="heading">Tabfold — Quick Switcher</span></div>
+    <span id="count" class="count"></span>
   </header>
 
-  <div class="controls">
-    <input id="q" type="text" role="combobox" aria-expanded="true" aria-controls="results" aria-autocomplete="list"
-           aria-label="Search groups or tabs" placeholder="Search groups or tabs..." autocomplete="off" spellcheck="false" autofocus>
-  </div>
-
   <main>
-    <ul id="results" role="listbox" aria-label="Groups and tabs"></ul>
+    <ul id="results" role="listbox" aria-label="Groups" tabindex="0"></ul>
     <p id="empty" class="empty" hidden></p>
   </main>
 
-  <footer id="foot"><span id="hints"></span><span id="count"></span></footer>
+  <footer id="foot"><span id="hints"></span></footer>
   <div id="live" class="sr-only" aria-live="polite"></div>
 
   <script type="module" src="quick.js"></script>
